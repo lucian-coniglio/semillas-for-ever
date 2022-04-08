@@ -1,11 +1,11 @@
 package ar.edu.unahur.obj2.semillas
 
-class Menta(var altura: Double, val anioSemilla: Int) {
+open class Menta(var altura: Double, val anioSemilla: Int) {
     fun toleranciaSol(): Int {
         return 7
     }
 
-    fun espacio(): Double {
+    open fun espacio(): Double {
         return altura + 1
     }
 
@@ -19,7 +19,7 @@ class Menta(var altura: Double, val anioSemilla: Int) {
 
 }
 
-class Soja(var altura: Double, val anioSemilla: Int) {
+ open class Soja(var altura: Double, val anioSemilla: Int) {
 
     fun toleranciaSol(): Int {
         if (altura < 0.5) {return 6}
@@ -31,7 +31,7 @@ class Soja(var altura: Double, val anioSemilla: Int) {
         return altura / 2
     }
 
-    fun daSemillas(): Boolean {
+    open fun daSemillas(): Boolean {
         return esFuerte() || anioSemilla > 2007 && altura in 0.75..0.9
     }
 
@@ -58,4 +58,12 @@ class Quinoa(var altura: Double, val anioSemilla: Int, var espacio: Double) {
     fun esFuerte(): Boolean {
         return toleranciaSol() > 9
     }
+}
+
+class SojaTrans(altura: Double, anioSemilla: Int) : Soja(altura, anioSemilla) {
+    override fun daSemillas(): Boolean {return false}
+}
+
+class Peperina(altura: Double, anioSemilla: Int) : Menta(altura, anioSemilla) {
+    override fun espacio(): Double {return (altura +1) *2}
 }
