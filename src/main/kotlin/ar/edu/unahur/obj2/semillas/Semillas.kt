@@ -67,3 +67,23 @@ class SojaTrans(altura: Double, anioSemilla: Int) : Soja(altura, anioSemilla) {
 class Peperina(altura: Double, anioSemilla: Int) : Menta(altura, anioSemilla) {
     override fun espacio(): Double {return (altura +1) *2}
 }
+
+class Parcela(val ancho: Int, val largo: Int, val horasSol: Int,) {
+    var plantas: ArrayList<String>()
+    fun superficie(): Int {
+        return ancho * largo
+    }
+
+    fun maxPlantas(): Int {
+        if (ancho > largo) {return superficie() / 5}
+        else {return superficie() / 3 + largo}
+    }
+
+    fun complicado(): Boolean {
+        if ()
+    }
+
+    fun plantar(planta: String): Unit {
+        plantas.add(planta)
+    }
+}
