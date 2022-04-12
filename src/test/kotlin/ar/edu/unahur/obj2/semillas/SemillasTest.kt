@@ -68,16 +68,16 @@ class SemillasTest : DescribeSpec ({
         val ssj3 = Soja(1.17, 2020)
         val ssj4 = Soja(1.23, 2021)
         //Plantamos Soja
-        //parcela1.plantar(ssj1)
-        //parcela1.plantar(ssj2)
-        //parcela1.plantar(ssj3)
-        //parcela1.plantar(ssj4)
+        parcela1.plantar(ssj1)
+        parcela1.plantar(ssj2)
+        parcela1.plantar(ssj3)
+        parcela1.plantar(ssj4)
 
         it("Comprobación de superficie y cantidad maxima de plantas "){
             parcela1.superficie().shouldBe(20.0)
             parcela1.maxPlantas().shouldBe(4)
-            //parcela1.plantas.size.shouldBe(4)
-            //parcela1.tieneComplicaciones().shouldBeFalse()
+            parcela1.plantas.size.shouldBe(4)
+            parcela1.tieneComplicaciones().shouldBeFalse()
         }
 
 
