@@ -22,6 +22,9 @@ open class Menta(altura: Double, anioSemilla: Int) : Planta(altura,anioSemilla) 
     override fun daSemillas(): Boolean {
         return altura > 0.4 || esFuerte()
     }
+    fun parcelaIdeal(unaParcela: Parcela): Boolean{
+        return unaParcela.superficie() > 6
+    }
 }
 
 open class Soja( altura: Double,  anioSemilla: Int) : Planta(altura, anioSemilla){
@@ -38,7 +41,9 @@ open class Soja( altura: Double,  anioSemilla: Int) : Planta(altura, anioSemilla
     override fun daSemillas(): Boolean {
         return esFuerte() || anioSemilla > 2007 && altura in 0.75..0.9
     }
-
+    fun parcelaIdeal(unaParcela: Parcela): Boolean {
+        return unaParcela.horasSol == toleranciaSol()
+    }
 }
 
 class Quinoa(altura: Double, anioSemilla: Int, var espacio: Double) : Planta(altura, anioSemilla){
@@ -54,11 +59,16 @@ class Quinoa(altura: Double, anioSemilla: Int, var espacio: Double) : Planta(alt
     override fun daSemillas(): Boolean {
         return esFuerte() || anioSemilla in 2001..2008
     }
-
+    fun parcelaIdeal(unaParcela: Parcela): Boolean {
+        return unaParcela.plantas.all {this.altura < 1.5}
+    }
 }
 
 class SojaTrans(altura: Double, anioSemilla: Int) : Soja(altura, anioSemilla) {
     override fun daSemillas(): Boolean {return false}
+    override fun parcelaIdeal(unaParcela: Parcela): Boolean {
+        return unaParcela.plantas.count() == 1
+    }
 }
 
 class Peperina(altura: Double, anioSemilla: Int) : Menta(altura, anioSemilla) {
@@ -66,25 +76,18 @@ class Peperina(altura: Double, anioSemilla: Int) : Menta(altura, anioSemilla) {
 }
 
 class Parcela(val ancho: Double, val largo: Double, val horasSol: Int,) {
-    var plantas = mutableListOf<Planta>()
+    var plantas: Iterable<Planta>()
 
     fun superficie(): Double {
         return ancho * largo
     }
 
     fun maxPlantas(): Double {
-        // Creo que aca deberia ser tipo entero, porque a mi entender no se puede plantas media planta. hay que revisarlo
         if (ancho <= largo) {return superficie() / 3 + largo} else {return superficie() / 5}
     }
 
-    fun tieneComplicaciones() = plantas.any() {p-> p.toleranciaSol() < horasSol}
 
-    fun plantar(planta: Planta): Unit {
-        plantas.add(planta)
-        //if plantas.size > this.maxPlantas() //throw exception: Se superó la capacidad maxima de la parcela
-        //if planta.toleranciaSol() - horasSol >= 2 //throw Exception: La parcela recibe más luz que la tolerancia de la planta
+    fun tieneComplicaciones(): Boolean { return plantas.any{this.toleranciaSol() < horasSol}}
 
-    }
 }
-
 
