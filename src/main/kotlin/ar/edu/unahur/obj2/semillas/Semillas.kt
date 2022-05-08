@@ -1,7 +1,7 @@
 package ar.edu.unahur.obj2.semillas
 
 
-open class Planta (open var altura: Double, open val anioSemilla: Int){
+abstract class Planta (open var altura: Double, open val anioSemilla: Int){
     open fun toleranciaSol(): Int {
         return 7
     }
@@ -66,18 +66,24 @@ class Quinoa(altura: Double, anioSemilla: Int, var espacio: Double) : Planta(alt
 
 class SojaTrans(altura: Double, anioSemilla: Int) : Soja(altura, anioSemilla) {
     override fun daSemillas(): Boolean {return false}
-    override fun parcelaIdeal(unaParcela: Parcela): Boolean {
-        return unaParcela.plantas.count() == 1
-    }
+    //override fun parcelaIdeal(unaParcela: Parcela): Boolean {
+    //    return unaParcela.plantas.count() == 1
+    //}
 }
 
 class Peperina(altura: Double, anioSemilla: Int) : Menta(altura, anioSemilla) {
     override fun espacio(): Double {return (altura +1) *2}
 }
 
-class Parcela(val ancho: Double, val largo: Double, val horasSol: Int,) {
-    var plantas: Iterable<Planta>()
+class Parcela(val ancho: Double, val largo: Double, val horasSol: Int) {
+    val plantas = mutableListOf<Planta>()
 
+    fun plantar(planta: Planta) {
+        // a mi entender esta funcion deberia tirar una excepcion e igualmente plantar la planta.
+        plantas.add(planta)
+        //if hayEspacio() || daMuchoElSolPara(planta) { tirar excepcion }
+    }
+    fun hayEspacio() = plantas.size() <=
     fun superficie(): Double {
         return ancho * largo
     }
@@ -87,7 +93,7 @@ class Parcela(val ancho: Double, val largo: Double, val horasSol: Int,) {
     }
 
 
-    fun tieneComplicaciones(): Boolean { return plantas.any{this.toleranciaSol() < horasSol}}
+    fun tieneComplicaciones(): Boolean { return plantas.any{p-> p.toleranciaSol() < horasSol}}
 
 }
 

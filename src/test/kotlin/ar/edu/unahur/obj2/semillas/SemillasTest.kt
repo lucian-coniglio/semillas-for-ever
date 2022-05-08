@@ -61,7 +61,7 @@ class SemillasTest : DescribeSpec ({
             menti.espacio().shouldBe(2.0)
         }
     }
-    describe("Creación de parcela, y plantas de soja") {
+    describe("Pruebas sobre parcela") {
         val parcela1 = Parcela(20.0, 1.0, 10)
         val ssj1 = Soja(1.1,2018)
         val ssj2 = Soja(1.12, 2019)
@@ -79,6 +79,20 @@ class SemillasTest : DescribeSpec ({
             parcela1.plantas.size.shouldBe(4)
             parcela1.tieneComplicaciones().shouldBeFalse()
         }
+        it( "Prueba de excepcion sobre cantidad maxima de plantas"){
+            //Creacion de una quinta planta de soja
+            val ssjBlue = Soja(1.1, 2021)
+            //plantamos la quinta planta
+            parcela1.plantar(ssjBlue)
+            //necesito buscar la manera de tirar un error
+        }
 
 
-}})
+}
+
+    describe("Pruebas sobre 'Parcelas Ideales'"){
+
+    }
+    describe( "Pruebas sobre 'Asociacion de plantas' ") {}
+    describe( "Estadisticas del INTA"){}
+})
